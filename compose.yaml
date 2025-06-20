@@ -1,0 +1,7 @@
+﻿services:
+  itbob-discordbot:
+    image: itbob-discordbot
+    build:
+      context: .
+      dockerfile: ITBob-DiscordBot/Dockerfile
+

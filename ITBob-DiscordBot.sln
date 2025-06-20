@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITBob-DiscordBot", "ITBob-DiscordBot\ITBob-DiscordBot.csproj", "{19B170BA-88AE-4685-95F2-F2F0598C4A8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD3809F2-B9D7-4160-BF2B-398022628B35}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19B170BA-88AE-4685-95F2-F2F0598C4A8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19B170BA-88AE-4685-95F2-F2F0598C4A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19B170BA-88AE-4685-95F2-F2F0598C4A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19B170BA-88AE-4685-95F2-F2F0598C4A8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
