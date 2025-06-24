@@ -10,7 +10,7 @@ public class PingCommand : ApplicationCommandModule<ApplicationCommandContext>
     public async Task<InteractionMessageProperties> Execute()
     {
         return new InteractionMessageProperties().WithContent(
-                $"OoO... Pong to {Context!.User.Username} \n-# I'm Connected with {Context!.Client.Latency.Milliseconds}ms")
+                $"OoO... Pong to {Context?.User.Username} \n-# I'm Connected with {Context?.Client.Latency.Milliseconds}ms")
             .WithFlags(MessageFlags.Ephemeral);
     }
 }

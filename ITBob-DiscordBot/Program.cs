@@ -41,13 +41,18 @@ public static class Program
                         StatusType = Config.BotPresence.Status,
                         Afk = false
                     };
+                    options.Intents = GatewayIntents.GuildMessages
+                                      | GatewayIntents.DirectMessages
+                                      | GatewayIntents.MessageContent
+                                      | GatewayIntents.DirectMessageReactions
+                                      | GatewayIntents.GuildMessageReactions;
                 }
-            );
+            ).AddGatewayHandlers(typeof(Program).Assembly);
 
         var host = builder.Build();
 
         host.AddModules(typeof(Program).Assembly);
-        host.UseGatewayEventHandlers();
+        host.UseGatewayHandlers();
 
         await host.RunAsync();
     }
