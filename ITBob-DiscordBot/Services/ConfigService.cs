@@ -7,12 +7,10 @@ namespace ITBob_DiscordBot.Services;
 
 public class ConfigService
 {
-    private AppConfig Config;
+    private AppConfig Config { get; set; }
 
-
-    public ConfigService(AppConfig config)
+    public ConfigService()
     {
-        Config = config;
     }
 
     public async Task CreateConfig()

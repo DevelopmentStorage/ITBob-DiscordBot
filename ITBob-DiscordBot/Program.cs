@@ -1,5 +1,8 @@
 ﻿using ITBob_DiscordBot.Configuration;
+using ITBob_DiscordBot.Database;
 using ITBob_DiscordBot.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetCord.Gateway;
 using NetCord.Hosting.Gateway;
@@ -10,35 +13,38 @@ namespace ITBob_DiscordBot;
 
 public static class Program
 {
-    private static AppConfig Config;
-
     public static async Task Main(string[] args)
     {
-        var configService = new ConfigService(new AppConfig());
-        await configService.CreateConfig();
-        Config = configService.Get();
-
         var builder = Host.CreateApplicationBuilder(args);
+
+        builder.Services.AddDbContext<DatabaseContext>();
+
+        // Load configuration
+        var configService = new ConfigService();
+        await configService.CreateConfig();
+        var config = configService.Get();
+
+        builder.Services.AddSingleton(configService);
 
         builder.Services
             .AddApplicationCommands()
             .AddDiscordGateway(options =>
                 {
-                    options.Token = Config.DiscordBot.Token;
-                    options.Presence = new PresenceProperties(Config.BotPresence.Status)
+                    options.Token = config.DiscordBot.Token;
+                    options.Presence = new PresenceProperties(config.BotPresence.Status)
                     {
                         Activities =
                         [
-                            new UserActivityProperties(Config.BotPresence.Name,
-                                Config.BotPresence.Type)
+                            new UserActivityProperties(config.BotPresence.Name,
+                                config.BotPresence.Type)
                             {
-                                Name = Config.BotPresence.Name,
-                                Type = Config.BotPresence.Type,
-                                Url = Config.BotPresence.Url,
-                                ApplicationId = Config.DiscordBot.ApplicationId
+                                Name = config.BotPresence.Name,
+                                Type = config.BotPresence.Type,
+                                Url = config.BotPresence.Url,
+                                ApplicationId = config.DiscordBot.ApplicationId
                             }
                         ],
-                        StatusType = Config.BotPresence.Status,
+                        StatusType = config.BotPresence.Status,
                         Afk = false
                     };
                     options.Intents = GatewayIntents.GuildMessages
@@ -50,6 +56,13 @@ public static class Program
             ).AddGatewayHandlers(typeof(Program).Assembly);
 
         var host = builder.Build();
+
+        // Perform Database Migrations
+        using (var scope = host.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            await db.Database.MigrateAsync();
+        }
 
         host.AddModules(typeof(Program).Assembly);
         host.UseGatewayHandlers();
