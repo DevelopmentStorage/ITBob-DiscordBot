@@ -30,16 +30,17 @@ public class ReactionRoleService
         return role;
     }
 
-    public async Task CreateReactionRoleAsync(ulong guildId, ulong roleId, ulong reactionMessageId,
-        ulong reactionChannelId, ulong forumThreadId, string creatorId)
+    public async Task CreateReactionRoleAsync(string gameName, ulong guildId, ulong reactionMessageId,
+        ulong reactionChannelId, ulong creatorId)
     {
         var reactionRole = new ReactionRolesEntity()
         {
-            GuildId = guildId.ToString(),
-            RoleId = roleId.ToString(),
-            ReactionMessageId = reactionMessageId.ToString(),
-            ReactionChannelId = reactionChannelId.ToString(),
-            ForumThreadId = forumThreadId.ToString(),
+            GuildId = guildId,
+            RoleId = 0,
+            GameName = gameName,
+            ReactionMessageId = reactionMessageId,
+            ReactionChannelId = reactionChannelId,
+            ForumThreadId = 0,
             IsApproved = false,
             CreatorId = creatorId,
             CreatedAt = DateTime.UtcNow

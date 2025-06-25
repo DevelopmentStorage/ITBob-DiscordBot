@@ -25,6 +25,7 @@ public static class Program
         var config = configService.Get();
 
         builder.Services.AddSingleton(configService);
+        builder.Services.AddScoped<ReactionRoleService>();
 
         builder.Services
             .AddApplicationCommands()

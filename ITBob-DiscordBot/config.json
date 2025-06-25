@@ -1,0 +1,25 @@
+{
+  "DiscordBot": {
+    "Token": "MTM4NTQ5OTM1NTk5NzI3ODI0OQ.GA7TpK.E_ozJppRZuRvS9ShUUZ3QnA8n0S4lmxdR3JEpE",
+    "ApplicationId": 1385499355997278249,
+    "GuildId": "1083818217862082691",
+    "BotAdmin": "850470027026759690"
+  },
+  "BotPresence": {
+    "Name": "Arbeitet gern f\u00FCr seinen Konzern.",
+    "Status": "dnd",
+    "Type": 4,
+    "Url": ""
+  },
+  "FeatureConfig": {
+    "ReactionRoles": {
+      "ForumChannelId": 1387151964197879949,
+      "RoleCreationChannelId": 1387151786288353390,
+      "AllowOtherToPostInRoleSpecifyChannel": false,
+      "AdminRoleApproveChannelId": 1365732784651370589,
+      "UserInfoMessageAfterCreate": "Deine Roe wurde erstellt! Ein Admin wird diese rolle nun best\u00E4tigen.\n-# (Autodelete in 10 sekunden)",
+      "AutoDeleteUserInfoMessageAfterCreate": 10,
+      "ReactionEmoji": "\uD83C\uDFAE"
+    }
+  }
+}

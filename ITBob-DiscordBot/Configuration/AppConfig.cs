@@ -40,7 +40,7 @@ public class ReactionRoles
     public ulong AdminRoleApproveChannelId { get; set; }
 
     public string UserInfoMessageAfterCreate { get; set; } =
-        "Deine Roe wurde erstellt! Ein Admin wird diese rolle nun bestätigen.\n-# (Autodelete in 10 sekunden)";
+        "Deine Rolle wurde erstellt! Ein Admin wird diese rolle nun bestätigen.\n-# (Autodelete in 10 sekunden)";
 
     public int AutoDeleteUserInfoMessageAfterCreate { get; set; } = 10;
     public string ReactionEmoji { get; set; } = "🎮";
