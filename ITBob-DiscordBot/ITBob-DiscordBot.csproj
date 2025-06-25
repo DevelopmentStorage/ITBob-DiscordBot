@@ -29,6 +29,7 @@
       <PackageReference Include="NetCord.Services" Version="1.0.0-alpha.390" />
       <PackageReference Include="Spectre.Console" Version="0.50.1-preview.0.18" />
       <PackageReference Include="Spectre.Console.Cli" Version="0.50.1-preview.0.18" />
+      <PackageReference Include="YoutubeDLSharp" Version="1.1.2" />
     </ItemGroup>
 
 </Project>

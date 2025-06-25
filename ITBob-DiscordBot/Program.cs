@@ -1,13 +1,17 @@
 ﻿using ITBob_DiscordBot.Configuration;
 using ITBob_DiscordBot.Database;
+using ITBob_DiscordBot.Features.ReactionRoles.Handler;
 using ITBob_DiscordBot.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NetCord;
 using NetCord.Gateway;
 using NetCord.Hosting.Gateway;
 using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
+using NetCord.Hosting.Services.ComponentInteractions;
+using NetCord.Services.ComponentInteractions;
 
 namespace ITBob_DiscordBot;
 
@@ -26,8 +30,18 @@ public static class Program
 
         builder.Services.AddSingleton(configService);
         builder.Services.AddScoped<ReactionRoleService>();
+        builder.Services.AddScoped<ReactionRoleChatInGameChannelHandler>();
+        builder.Services.AddScoped<ReactionRoleCreationHandler>();
+        builder.Services.AddScoped<VerifyService>();
 
         builder.Services
+            .AddComponentInteractions<ButtonInteraction, ButtonInteractionContext>()
+            .AddComponentInteractions<StringMenuInteraction, StringMenuInteractionContext>()
+            .AddComponentInteractions<UserMenuInteraction, UserMenuInteractionContext>()
+            .AddComponentInteractions<RoleMenuInteraction, RoleMenuInteractionContext>()
+            .AddComponentInteractions<MentionableMenuInteraction, MentionableMenuInteractionContext>()
+            .AddComponentInteractions<ChannelMenuInteraction, ChannelMenuInteractionContext>()
+            .AddComponentInteractions<ModalInteraction, ModalInteractionContext>()
             .AddApplicationCommands()
             .AddDiscordGateway(options =>
                 {

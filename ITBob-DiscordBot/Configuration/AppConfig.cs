@@ -30,12 +30,21 @@ public class Presence
 public class FeatureConfig
 {
     public ReactionRoles ReactionRoles { get; set; } = new();
+    public Verify Verify { get; set; } = new();
+}
+
+public class Verify
+{
+    public ulong AdminVerifyChannelId { get; set; } = 1365732784651370589;
 }
 
 public class ReactionRoles
 {
     public ulong ForumChannelId { get; set; }
+
     public ulong RoleCreationChannelId { get; set; }
+
+    // TODO: Add a check if the channel is a forum channel
     public bool AllowOtherToPostInRoleSpecifyChannel { get; set; }
     public ulong AdminRoleApproveChannelId { get; set; }
 

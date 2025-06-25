@@ -10,6 +10,7 @@ public class ReactionRolesEntity
     public required ulong ReactionChannelId { get; set; }
     public ulong ForumThreadId { get; set; }
     public required bool IsApproved { get; set; }
+    public ulong AdminMessageId { get; set; }
     public required ulong CreatorId { get; set; }
     public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
