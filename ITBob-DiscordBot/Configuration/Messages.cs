@@ -84,5 +84,8 @@ public class ReactionRoleMessages
 
         public string AdminReactionRoleDeny { get; set; } =
             "Die Anfrage für die Reaction Role wurde abgelehnt.";
+
+        public string ReactionRoleRoleNameAlreadyExist { get; set; } =
+            "Eine Rolle mit dem Namen '{0}' existiert bereits. Bitte wähle einen anderen Namen.";
     }
 }

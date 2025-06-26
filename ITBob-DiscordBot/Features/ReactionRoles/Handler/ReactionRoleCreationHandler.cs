@@ -19,6 +19,22 @@ public class ReactionRoleCreationHandler
             await Task.Delay(TimeSpan.FromSeconds(5));
         }
 
+        var isExistRoleWithName = (await (await restClient.GetGuildAsync((ulong)message.GuildId)).GetRolesAsync()
+            ).FirstOrDefault(role => role.Name.Equals(message.Content, StringComparison.OrdinalIgnoreCase));
+
+        if (isExistRoleWithName != null)
+        {
+            var errorMessage = await message.ReplyAsync(
+                config.Messages.ReactionRoleMessages.Errors.ReactionRoleRoleNameAlreadyExist.Replace("{0}",
+                    isExistRoleWithName.Name));
+            await Task.Delay(TimeSpan.FromSeconds(5));
+            logger.LogWarning("Role with name {RoleName} already exists in guild {GuildId}", isExistRoleWithName.Name,
+                message.GuildId);
+            await message.DeleteAsync();
+            await errorMessage.DeleteAsync();
+            return;
+        }
+
         await HandleConfirmMessage(message, config);
 
         // Admin Message

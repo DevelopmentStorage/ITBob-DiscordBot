@@ -46,7 +46,6 @@ public class ReactionRoles
 
     public ulong RoleCreationChannelId { get; set; }
 
-    // TODO: Add a check if the channel is a forum channel
     public bool AllowOtherToPostInRoleSpecifyChannel { get; set; }
     public ulong AdminRoleApproveChannelId { get; set; }
 

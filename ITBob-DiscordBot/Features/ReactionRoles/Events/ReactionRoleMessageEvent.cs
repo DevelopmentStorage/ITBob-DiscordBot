@@ -55,8 +55,10 @@ public class ReactionRoleMessageEvent : IMessageCreateGatewayHandler
                 break;
             case ReactionRoleMessageCreateType.IsPostMessageInGameForumThread:
             {
+                var guild = await restClient.GetGuildAsync((ulong)message.GuildId);
+                var member = await guild.GetUserAsync(message.Author.Id);
                 await reactionRoleChatInGameChannelHandler.Handle(
-                    message, config, restClient, Logger, reactionRoleService);
+                    message, member, config, restClient, Logger, reactionRoleService);
             }
                 break;
             case ReactionRoleMessageCreateType.Unknown:

@@ -9,13 +9,12 @@ namespace ITBob_DiscordBot.Features.ReactionRoles.Handler;
 
 public class ReactionRoleChatInGameChannelHandler
 {
-    public async Task Handle(Message message, AppConfig config, RestClient client, ILogger logger,
+    public async Task Handle(Message message, GuildUser member, AppConfig config, RestClient client, ILogger logger,
         ReactionRoleService reactionRoleService)
     {
-        var reactionRole = await reactionRoleService.GetReactionRoleByMessageIdAsync(message.Id);
+        var reactionRole = await reactionRoleService.GetReactionRoleByForumThreadIdIdAsync(message.ChannelId);
         var isSendMessageFromNotGameUsersAllowed =
             config.FeatureConfig.ReactionRoles.AllowOtherToPostInRoleSpecifyChannel;
-        var member = message.Author as GuildUser;
         if (member == null)
         {
             logger.LogWarning("ReactionRoleChatInGameChannelHandler: Message author is not a guild user");
@@ -33,11 +32,14 @@ public class ReactionRoleChatInGameChannelHandler
         var forumThreadChannel =
             guildChannels.FirstOrDefault(guildChannel => guildChannel.Id == message.ChannelId);
 
+        var hasMemberRoleInGameChannel = member.RoleIds.Contains(reactionRole.RoleId);
+
         if (isSendMessageFromNotGameUsersAllowed ||
-            member.GetRoles(guild).Any(r => r.Id == reactionRole?.RoleId)) return;
+            hasMemberRoleInGameChannel) return;
 
         var errorMessage =
-            await forumThreadChannel?.SendMessageAsync(config.Messages.ReactionRoleMessages.IsNotAllowedToSendMessagesInGameThread);
+            await forumThreadChannel?.SendMessageAsync(config.Messages.ReactionRoleMessages
+                .IsNotAllowedToSendMessagesInGameThread);
 
         _ = Task.Run(async () =>
         {

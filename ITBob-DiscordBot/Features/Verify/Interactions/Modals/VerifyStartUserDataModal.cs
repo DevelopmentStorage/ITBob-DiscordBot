@@ -23,7 +23,7 @@ public class VerifyStartUserDataModal : ComponentInteractionModule<ModalInteract
         var classOption = Context.Components.OfType<TextInput>().FirstOrDefault(input => input.CustomId == "class");
         var guild = await Context.Client.Rest.GetGuildAsync((ulong)Context.Interaction.GuildId);
 
-        await VerifyService.CreateVerifyRequestAsync(
+        VerifyService.CreateVerifyRequestAsync(
             Context.User.Id,
             name?.Value ?? "Unknown",
             classOption?.Value ?? "Unknown",

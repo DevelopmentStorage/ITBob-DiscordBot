@@ -43,6 +43,17 @@ public class ReactionRoleService
         return reactionRole.IsApproved ? reactionRole : null;
     }
 
+    public async Task<ReactionRolesEntity?> GetReactionRoleByForumThreadIdIdAsync(ulong forumThreadId)
+    {
+        var reactionRole = DatabaseContext.ReactionRoles.FirstOrDefault(r => r.ForumThreadId == forumThreadId);
+        if (reactionRole == null)
+        {
+            return null;
+        }
+
+        return reactionRole.IsApproved ? reactionRole : null;
+    }
+
     public async Task CreateReactionRoleAsync(string gameName, ulong guildId, ulong reactionMessageId,
         ulong reactionChannelId, ulong creatorId, ulong adminMessageId)
     {
@@ -108,7 +119,7 @@ public class ReactionRoleService
         }
 
         var thread = await forumChannel.CreateForumGuildThreadAsync(
-            new ForumGuildThreadProperties($"Game-Thread: {reactionRole.GameName}",
+            new ForumGuildThreadProperties($"{reactionRole.GameName}",
                 new ForumGuildThreadMessageProperties()
                 {
                     Components =

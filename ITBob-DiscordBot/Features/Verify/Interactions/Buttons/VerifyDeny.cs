@@ -7,14 +7,14 @@ namespace ITBob_DiscordBot.Features.Verify.Interactions.Buttons;
 public class VerifyDeny : ComponentInteractionModule<ButtonInteractionContext>
 {
     [ComponentInteraction("verify-deny")]
-    public async Task<InteractionCallbackResponse?> Button(ulong messageId)
+    public async Task<InteractionMessageProperties?> Button(ulong messageId)
     {
         var message = await Context.Interaction.Channel.GetMessageAsync(messageId);
         await message.DeleteAsync();
-        return await RespondAsync(InteractionCallback.ModifyMessage(options =>
+        return new InteractionMessageProperties
         {
-            options.Content = "Done";
-            options.Components = [];
-        }));
+            Content = "Die Verifizierung wurde abgelehnt.",
+            Flags = MessageFlags.Ephemeral
+        };
     }
 }

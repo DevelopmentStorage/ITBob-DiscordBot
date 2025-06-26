@@ -1,3 +1,4 @@
+using ITBob_DiscordBot.Services;
 using Microsoft.Extensions.Logging;
 using NetCord;
 using NetCord.Rest;
@@ -8,24 +9,29 @@ namespace ITBob_DiscordBot.Features.Verify.Interactions.Buttons;
 public class VerifyApproveAddFachkraft : ComponentInteractionModule<ButtonInteractionContext>
 {
     private readonly ILogger<VerifyApproveAddFachkraft> Logger;
+    private readonly ConfigService ConfigService;
+    private readonly VerifyService VerifyService;
 
-    public VerifyApproveAddFachkraft(ILogger<VerifyApproveAddFachkraft> logger)
+    public VerifyApproveAddFachkraft(ILogger<VerifyApproveAddFachkraft> logger, ConfigService configService,
+        VerifyService verifyService)
     {
         Logger = logger;
+        ConfigService = configService;
+        VerifyService = verifyService;
     }
 
     [ComponentInteraction("verify-approve-add-fachkraft")]
-    public async Task<InteractionCallbackResponse?> Button(ulong userId, string name, string className)
+    public async Task<InteractionMessageProperties> Button(ulong userId, string name, string className)
     {
         var guild = await Context.Client.Rest.GetGuildAsync((ulong)Context.Interaction.GuildId);
         if (guild is null)
         {
             Logger.LogWarning("Guild not found for interaction {InteractionId}", Context.Interaction.Id);
-            return await RespondAsync(InteractionCallback.ModifyMessage(options =>
+            return new InteractionMessageProperties
             {
-                options.Content = "No Guild Found";
-                options.Components = [];
-            }));
+                Content = "Guild not found. Please try again later.",
+                Flags = MessageFlags.Ephemeral
+            };
         }
 
         var member = await guild.GetUserAsync(userId);
@@ -33,12 +39,36 @@ public class VerifyApproveAddFachkraft : ComponentInteractionModule<ButtonIntera
         await member.ModifyAsync(options =>
             options.Nickname = $"{name} - {className}");
 
-        // TODO: Add Config Layber8 Role here and add Logic for adding.
+        var role = await guild.GetRoleAsync(ConfigService.Get().FeatureConfig.Verify.FachkraftRoleId);
 
-        return await RespondAsync(InteractionCallback.ModifyMessage(options =>
+        if (role == null)
+            return new InteractionMessageProperties
+            {
+                Content = "Fachkraft role not found. Please contact an admin.",
+                Flags = MessageFlags.Ephemeral
+            };
+
+        if (member.RoleIds.Contains(role.Id))
+            return new InteractionMessageProperties
+            {
+                Content = "User already has the Fachkraft role.",
+                Flags = MessageFlags.Ephemeral
+            };
+
+        await member.AddRoleAsync(role.Id);
+
+        VerifyService.SendVerifyLogMessage(
+            (TextChannel)(await guild.GetChannelsAsync()).FirstOrDefault(channel => channel.Id == ConfigService
+                .Get().FeatureConfig.Verify
+                .AdminVerifyChannelId
+            ),
+            role, userId, Context.Interaction.User.Id);
+
+        return new InteractionMessageProperties
         {
-            options.Content = "Done";
-            options.Components = [];
-        }));
+            Content = "Done",
+            Components = [],
+            Flags = MessageFlags.Ephemeral
+        };
     }
 }

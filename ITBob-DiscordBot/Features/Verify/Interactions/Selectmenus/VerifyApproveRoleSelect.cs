@@ -1,3 +1,4 @@
+using ITBob_DiscordBot.Services;
 using Microsoft.Extensions.Logging;
 using NetCord;
 using NetCord.Rest;
@@ -8,9 +9,14 @@ namespace ITBob_DiscordBot.Features.Verify.Interactions.Selectmenus;
 public class VerifyApproveRoleSelect : ComponentInteractionModule<RoleMenuInteractionContext>
 {
     private readonly ILogger<VerifyApproveRoleSelect> Logger;
+    private readonly VerifyService VerfyService;
+    private readonly ConfigService ConfigService;
 
-    public VerifyApproveRoleSelect(ILogger<VerifyApproveRoleSelect> logger)
+    public VerifyApproveRoleSelect(ILogger<VerifyApproveRoleSelect> logger, VerifyService verfyService,
+        ConfigService configService)
     {
+        ConfigService = configService;
+        VerfyService = verfyService;
         Logger = logger;
     }
 
@@ -44,23 +50,12 @@ public class VerifyApproveRoleSelect : ComponentInteractionModule<RoleMenuIntera
 
             await member.AddRoleAsync(role.Id);
 
-            await Context.Interaction.Channel.SendMessageAsync(
-                new MessageProperties
-                {
-                    Components =
-                    [
-                        new ComponentContainerProperties
-                        {
-                            new TextDisplayProperties(
-                                "Role <@&{0}> has been added for user <@{2}> by <@{3}>."
-                                    .Replace("{0}", role.Id.ToString())
-                                    .Replace("{2}", userId.ToString()).Replace(
-                                        "{3}", Context.Interaction.User.Id.ToString())),
-                        }
-                    ],
-                    Flags = MessageFlags.IsComponentsV2
-                }
-            );
+            await VerfyService.SendVerifyLogMessage(
+                (TextChannel)(await guild.GetChannelsAsync()).FirstOrDefault(channel => channel.Id == ConfigService
+                    .Get().FeatureConfig.Verify
+                    .AdminVerifyChannelId
+                ),
+                role, userId, Context.Interaction.User.Id);
 
             return new InteractionMessageProperties
             {

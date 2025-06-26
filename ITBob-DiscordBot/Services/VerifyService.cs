@@ -16,6 +16,27 @@ public class VerifyService
         ConfigService = configService;
     }
 
+    public async Task SendVerifyLogMessage(TextChannel channel, Role role, ulong userId, ulong executer)
+    {
+        await channel.SendMessageAsync(
+            new MessageProperties
+            {
+                Components =
+                [
+                    new ComponentContainerProperties
+                    {
+                        new TextDisplayProperties(
+                            "Role <@&{0}> has been added for user <@{2}> by <@{3}>."
+                                .Replace("{0}", role.Id.ToString())
+                                .Replace("{2}", userId.ToString()).Replace(
+                                    "{3}", executer.ToString())),
+                    }
+                ],
+                Flags = MessageFlags.IsComponentsV2
+            }
+        );
+    }
+
     public async Task CreateVerifyRequestAsync(ulong userId, string name, string className, RestGuild guild)
     {
         var config = ConfigService.Get();

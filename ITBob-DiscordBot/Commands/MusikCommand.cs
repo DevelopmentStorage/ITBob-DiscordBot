@@ -19,6 +19,7 @@ public class MusicCommand : ApplicationCommandModule<ApplicationCommandContext>
     public async Task PlayAsync(string songUrl)
     {
         await RespondAsync(InteractionCallback.DeferredMessage(MessageFlags.Ephemeral));
+        /*
         await ModifyResponseAsync(options =>
             options.Content =
                 "Downloading setup files... This may take a while, please be patient!");
@@ -38,7 +39,7 @@ public class MusicCommand : ApplicationCommandModule<ApplicationCommandContext>
 
         var audioDownload = await ytdl.RunAudioDownload(songUrl, AudioConversionFormat.Mp3);
         var audioFileName = audioDownload.Data.Split('/').Last();
-
+*/
         var guild = await Context.Client.Rest.GetGuildAsync((ulong)Context.Interaction.GuildId);
 
         if (guild == null)
@@ -48,15 +49,17 @@ public class MusicCommand : ApplicationCommandModule<ApplicationCommandContext>
             return;
         }
 
-        JoinVoiceChannelAsync(
-            guild, audioDownload, audioFileName);
-
         await ModifyResponseAsync(options =>
             options.Content =
-                $"Now playing: {audioFileName}\nPlease wait while the song is being processed and sent to Discord.");
+                $"Now playing: test\nPlease wait while the song is being processed and sent to Discord.");
+
+        await JoinVoiceChannelAsync(
+            guild,
+            "C:/Users/jespe/Documents/GitHub/ITBob-DiscordBot/ITBob-DiscordBot/bin/Debug/net9.0/musicQueue/Sean Paul - No Lie ft. Dua Lipa [GzU8KqOY8YA].mp3",
+            "test");
     }
 
-    private async Task JoinVoiceChannelAsync(RestGuild guild, RunResult<string> audioDownload, string audioFileName)
+    private async Task JoinVoiceChannelAsync(RestGuild guild, string audioDownload, string audioFileName)
     {
         var voiceState = await guild.GetUserVoiceStateAsync(Context.User.Id);
 
@@ -73,15 +76,9 @@ public class MusicCommand : ApplicationCommandModule<ApplicationCommandContext>
         // Connect
         await voiceClient.StartAsync();
 
-        await ModifyResponseAsync(options =>
-            options.Content = $"Connected to voice channel: {voiceState.ChannelId.GetValueOrDefault()}");
-
         // Enter speaking state, to be able to send voice
         await voiceClient.EnterSpeakingStateAsync(new SpeakingProperties(SpeakingFlags.Microphone));
 
-        // Respond to the interaction
-        await ModifyResponseAsync(options => options.Content =
-            $"Now playing: {audioFileName}\nPlease wait while the song is being processed and sent to Discord.");
         // Create a stream that sends voice to Discord
         var outStream = voiceClient.CreateOutputStream();
 
@@ -110,7 +107,7 @@ public class MusicCommand : ApplicationCommandModule<ApplicationCommandContext>
 
         // Specify the input
         arguments.Add("-i");
-        arguments.Add(audioDownload.Data);
+        arguments.Add(audioDownload);
 
         // Set the logging level to quiet mode
         arguments.Add("-loglevel");
