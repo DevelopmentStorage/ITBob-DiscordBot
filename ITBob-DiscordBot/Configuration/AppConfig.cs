@@ -36,6 +36,8 @@ public class FeatureConfig
 public class Verify
 {
     public ulong AdminVerifyChannelId { get; set; } = 1365732784651370589;
+    public ulong Layer8RoleId { get; set; }
+    public ulong FachkraftRoleId { get; set; }
 }
 
 public class ReactionRoles

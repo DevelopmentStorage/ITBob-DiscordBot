@@ -15,7 +15,7 @@ public class VerifyApproveRoleSelect : ComponentInteractionModule<RoleMenuIntera
     }
 
     [ComponentInteraction("verify-approve-role-select")]
-    public async Task<InteractionMessageProperties> SelectMenu(ulong userId)
+    public async Task<InteractionMessageProperties> SelectMenu(ulong userId, string name, string className)
     {
         try
         {

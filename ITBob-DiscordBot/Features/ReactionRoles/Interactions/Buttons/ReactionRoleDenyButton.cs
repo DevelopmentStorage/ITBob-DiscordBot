@@ -27,9 +27,14 @@ public class ReactionRoleDenyButton : ComponentInteractionModule<ButtonInteracti
 
         var delete = await ReactionRoleService.DeleteReactionRoleByMessageIdAsync(messageId);
 
-        if (delete > 0)
+        if (delete != null)
         {
-            var adminMessage = await Context.Channel.GetMessageAsync(delete);
+            var adminMessage = await Context.Channel.GetMessageAsync(delete.AdminMessageId);
+            var reactionGuild = await Context.Client.Rest.GetGuildAsync((ulong)Context.Interaction.GuildId);
+            var reactionChannel =
+                (await reactionGuild.GetChannelsAsync()).FirstOrDefault(channel =>
+                    channel.Id == delete.ReactionChannelId) as TextChannel;
+            await (await reactionChannel?.GetMessageAsync(delete.ReactionMessageId)).DeleteAsync();
             await adminMessage.DeleteAsync();
 
             return new InteractionMessageProperties
@@ -38,7 +43,6 @@ public class ReactionRoleDenyButton : ComponentInteractionModule<ButtonInteracti
                 Flags = MessageFlags.Ephemeral
             };
         }
-
 
         Logger.LogError("Failed to delete reaction role with message ID {MessageId}.", messageId);
         return new InteractionMessageProperties

@@ -136,17 +136,29 @@ public class ReactionRoleService
     }
 
 
-    public async Task<ulong> DeleteReactionRoleByMessageIdAsync(ulong messageId)
+    public async Task<DeleteCallback?> DeleteReactionRoleByMessageIdAsync(ulong messageId)
     {
         var reactionRole = DatabaseContext.ReactionRoles.FirstOrDefault(r => r.ReactionMessageId == messageId);
         if (reactionRole == null)
         {
-            return 0;
+            return null;
         }
 
         DatabaseContext.ReactionRoles.Remove(reactionRole);
         await DatabaseContext.SaveChangesAsync();
 
-        return reactionRole.AdminMessageId;
+        return new DeleteCallback
+        {
+            ReactionChannelId = reactionRole.ReactionChannelId,
+            AdminMessageId = reactionRole.AdminMessageId,
+            ReactionMessageId = reactionRole.ReactionMessageId
+        };
+    }
+
+    public class DeleteCallback
+    {
+        public ulong AdminMessageId { get; set; }
+        public ulong ReactionChannelId { get; set; }
+        public ulong ReactionMessageId { get; set; }
     }
 }
