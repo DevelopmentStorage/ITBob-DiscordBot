@@ -25,19 +25,15 @@ public class VerifyMessageCommand : ApplicationCommandModule<ApplicationCommandC
         {
             Components =
             [
-                new ComponentContainerProperties
+                new ActionRowProperties
                 {
-                    new TextDisplayProperties(ConfigService.Get().Messages.VerifyMessages.VerifyStartMessage),
-                    new ActionRowProperties
+                    new ButtonProperties("verify-start", new EmojiProperties(1288526802024792145),
+                        ButtonStyle.Secondary)
                     {
-                        new ButtonProperties("verify-start", new EmojiProperties(1288526802024792145),
-                            ButtonStyle.Secondary)
-                        {
-                            Id = 2,
-                            Emoji = new EmojiProperties(1288663952506621995),
-                            Style = ButtonStyle.Primary,
-                            CustomId = "verify-start",
-                        }
+                        Id = 2,
+                        Label = "Follow the white rabbit...",
+                        Style = ButtonStyle.Primary,
+                        CustomId = "verify-start",
                     }
                 }
             ],
