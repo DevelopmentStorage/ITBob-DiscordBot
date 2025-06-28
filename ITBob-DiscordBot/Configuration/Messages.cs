@@ -45,7 +45,7 @@ public class ReactionRoleMessages
 
     public string IsNotAllowedToSendMessagesInGameThread { get; set; } =
         """
-        -# ❗ Du bist nicht berechtigt, Nachrichten in diesem Game-Forum zu senden.
+        -# ❗ Du bist nicht berechtigt, Nachrichten in diesem r/topics zu senden.
         -# (Bitte kontaktiere einen Admin, wenn du denkst, dass dies ein Fehler ist.)
         """;
 
