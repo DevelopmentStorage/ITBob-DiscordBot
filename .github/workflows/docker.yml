@@ -11,7 +11,7 @@ on:
     - cron: "0 0 * * 1"
   push:
     branches:
-      - main
+      - master
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 jobs:
