@@ -1,5 +1,3 @@
-using ITBob_DiscordBot.Services;
-
 namespace ITBob_DiscordBot.Configuration;
 
 public class Messages
@@ -10,20 +8,12 @@ public class Messages
 
 public class VerifyMessages
 {
-    public string VerifyStartMessage { get; set; } =
-        """
-        Willkommen auf dem Disocrd-Server von Irgendwas mit IT! 👋
-        > Lese diese Message sorgfältig durch, um den Verifizierungsprozess zu verstehen. (https://discord.com/channels/1078249394161324053/1385340956403961886/1385351297036849242)
-        > Kicke auf den Button unten, um den Verifizierungsprozess zu starten.
-        > Warte auf die Verifizierung durch einen Admin, bevor du den Server vollständig nutzen kannst.
-        """;
-
     public string VerifyModalTitle { get; set; } = "Verifizierung starten";
     public string VerifyModalNameOption { get; set; } = "Name";
     public string VerifyModalClassOption { get; set; } = "Klasse";
 
     public string VerifySuccessMessage { get; set; } =
-        "Du wurdest verifiziert! Ein Admin wird dich in Kürze in die entsprechenden Rollen einordnen.";
+        "Deine Eingaben wurden erfolgreich gespeichert! Ein Admin wird deine Verifizierung in Kürze überprüfen.";
 
     public string VerifyAdminRequestMessage { get; set; } =
         """
@@ -32,10 +22,6 @@ public class VerifyMessages
         > **Klasse:** {1}
         > **Ersteller:** <@{2}>
         """;
-
-
-    public string VerifyFailedMessage { get; set; } =
-        "Die Verifizierung ist fehlgeschlagen. Bitte versuche es erneut.";
 }
 
 public class ReactionRoleMessages

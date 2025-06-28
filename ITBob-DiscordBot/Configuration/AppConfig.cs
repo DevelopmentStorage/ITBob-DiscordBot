@@ -36,8 +36,8 @@ public class FeatureConfig
 
 public class TempVoice
 {
-    public ulong TempVoiceChannelId { get; set; } = 1365732784651370589;
-    public ulong TempVoiceCategoryId { get; set; } = 1365732784651370589;
+    public ulong TempVoiceChannelId { get; set; }
+    public ulong TempVoiceCategoryId { get; set; }
 
     public string[] TempVoiceChannelNames { get; set; } = new[]
     {
@@ -54,12 +54,17 @@ public class TempVoice
         Permissions.Connect,
         Permissions.Speak,
         Permissions.UseVoiceActivityDetection,
-        Permissions.ViewChannel
+        Permissions.ViewChannel,
+        Permissions.ManageChannels,
+        Permissions.KickUsers,
+        Permissions.MuteUsers,
+        Permissions.DeafenUsers,
+        Permissions.MoveUsers,
+        Permissions.ManageMessages,
     };
 
     public List<Permissions> TempVoiceChannelDeniedPermissions { get; set; } = new()
     {
-        Permissions.ManageChannels,
         Permissions.ManageRoles,
         Permissions.ManageWebhooks,
     };
@@ -67,7 +72,7 @@ public class TempVoice
 
 public class Verify
 {
-    public ulong AdminVerifyChannelId { get; set; } = 1365732784651370589;
+    public ulong AdminVerifyChannelId { get; set; }
     public ulong Layer8RoleId { get; set; }
     public ulong FachkraftRoleId { get; set; }
 }
@@ -85,5 +90,5 @@ public class ReactionRoles
         "Deine Rolle wurde erstellt! Ein Admin wird diese rolle nun bestätigen.\n-# (Autodelete in 10 sekunden)";
 
     public int AutoDeleteUserInfoMessageAfterCreate { get; set; } = 10;
-    public string ReactionEmoji { get; set; } = "🎮";
+    public string ReactionEmoji { get; set; } = "👍";
 }
