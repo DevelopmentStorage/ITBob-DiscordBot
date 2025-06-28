@@ -1,7 +1,5 @@
 ﻿services:
   itbob-discordbot:
-    image: itbob-discordbot
-    build:
-      context: .
-      dockerfile: ITBob-DiscordBot/Dockerfile
+    image: ghcr.io/developmentstorage/itbob-discordbot:latest
+    container_name: itbob-discordbot
 

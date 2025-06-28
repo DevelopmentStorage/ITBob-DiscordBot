@@ -1,10 +1,8 @@
-using ITBob_DiscordBot.Configuration;
 using ITBob_DiscordBot.Enums;
 using ITBob_DiscordBot.Features.ReactionRoles.Handler;
 using ITBob_DiscordBot.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NetCord;
 using NetCord.Gateway;
 using NetCord.Hosting.Gateway;
 using NetCord.Rest;

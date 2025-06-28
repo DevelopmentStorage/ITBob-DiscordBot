@@ -35,6 +35,7 @@ public static class Program
         builder.Services.AddScoped<ReactionRoleChatInGameChannelHandler>();
         builder.Services.AddScoped<ReactionRoleCreationHandler>();
         builder.Services.AddScoped<VerifyService>();
+        builder.Services.AddScoped<TempVoiceService>();
 
         builder.Services
             .AddComponentInteractions<ButtonInteraction, ButtonInteractionContext>()
@@ -52,23 +53,19 @@ public static class Program
                     {
                         Activities =
                         [
-                            new UserActivityProperties(config.BotPresence.Name,
-                                config.BotPresence.Type)
-                            {
-                                Name = config.BotPresence.Name,
-                                Type = config.BotPresence.Type,
-                                Url = config.BotPresence.Url,
-                                ApplicationId = config.DiscordBot.ApplicationId
-                            }
+                            new UserActivityProperties("Custom Status", config.BotPresence.Type)
+                                { State = config.BotPresence.Name }
                         ],
                         StatusType = config.BotPresence.Status,
                         Afk = false
                     };
-                    options.Intents = GatewayIntents.GuildMessages
+                    options.Intents = GatewayIntents.All
                                       | GatewayIntents.DirectMessages
                                       | GatewayIntents.MessageContent
                                       | GatewayIntents.DirectMessageReactions
-                                      | GatewayIntents.GuildMessageReactions;
+                                      | GatewayIntents.GuildMessageReactions
+                                      | GatewayIntents.Guilds
+                                      | GatewayIntents.GuildVoiceStates;
                 }
             ).AddGatewayHandlers(typeof(Program).Assembly);
 

@@ -6,6 +6,7 @@ namespace ITBob_DiscordBot.Database;
 public class DatabaseContext : DbContext
 {
     public DbSet<ReactionRolesEntity> ReactionRoles { get; set; }
+    public DbSet<TempVoiceEntity> TempVoiceChannels { get; set; }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
