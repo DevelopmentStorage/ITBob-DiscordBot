@@ -27,7 +27,7 @@ public class VerifyMessageCommand : ApplicationCommandModule<ApplicationCommandC
             [
                 new ActionRowProperties
                 {
-                    new ButtonProperties("verify-start", new EmojiProperties(1288526802024792145),
+                    new ButtonProperties("verify-start", "Follow the white rabbit...",
                         ButtonStyle.Secondary)
                     {
                         Id = 2,
