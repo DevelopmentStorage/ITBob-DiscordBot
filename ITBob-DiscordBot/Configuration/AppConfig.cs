@@ -38,7 +38,6 @@ public class TempVoice
 {
     public ulong TempVoiceChannelId { get; set; } = 1365732784651370589;
     public ulong TempVoiceCategoryId { get; set; } = 1365732784651370589;
-    public string TempVoiceChannelNameFormat { get; set; } = "{0}'s Channel";
 
     public string[] TempVoiceChannelNames { get; set; } = new[]
     {

@@ -29,7 +29,7 @@ public class VerifyStartButton : ComponentInteractionModule<ButtonInteractionCon
                     MaxLength = 100,
                     MinLength = 2,
                 },
-                new TextInputProperties("class", TextInputStyle.Paragraph,
+                new TextInputProperties("class", TextInputStyle.Short,
                     config.Messages.VerifyMessages.VerifyModalClassOption)
                 {
                     Required = false,

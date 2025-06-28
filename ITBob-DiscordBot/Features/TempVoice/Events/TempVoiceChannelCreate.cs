@@ -105,8 +105,7 @@ public class TempVoiceChannelCreate : IVoiceStateUpdateGatewayHandler
 
         var channel = await guild.CreateChannelAsync(
             new GuildChannelProperties(
-                config.FeatureConfig.TempVoice.TempVoiceChannelNameFormat.Replace("{0}",
-                    channelName),
+                channelName,
                 ChannelType.VoiceGuildChannel)
             {
                 Name = channelName,
