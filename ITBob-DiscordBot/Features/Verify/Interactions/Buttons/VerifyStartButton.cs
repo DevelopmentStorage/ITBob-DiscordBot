@@ -7,13 +7,11 @@ namespace ITBob_DiscordBot.Features.Verify.Interactions.Buttons;
 
 public class VerifyStartButton : ComponentInteractionModule<ButtonInteractionContext>
 {
-    public readonly ILogger<VerifyStartButton> Logger;
     private readonly ConfigService ConfigService;
 
 
-    public VerifyStartButton(ConfigService configService, ILogger<VerifyStartButton> logger)
+    public VerifyStartButton(ConfigService configService)
     {
-        Logger = logger;
         ConfigService = configService;
     }
 

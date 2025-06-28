@@ -34,8 +34,8 @@ public class VerifyMessageCommand : ApplicationCommandModule<ApplicationCommandC
                             ButtonStyle.Secondary)
                         {
                             Id = 2,
-                            Emoji = new EmojiProperties(1288526802024792145),
-                            Style = ButtonStyle.Secondary,
+                            Emoji = new EmojiProperties(1288663952506621995),
+                            Style = ButtonStyle.Primary,
                             CustomId = "verify-start",
                         }
                     }
