@@ -37,7 +37,7 @@ public class ReactionRoleMessages
 
     public string ForumThreadCreated { get; set; } =
         """
-        ## :video_game: Willkommen im Game-Forum für {0}!
+        ## 💡 Willkommen bei r/topics für {0}!
         > Bitte beachte, dass du hier nur Beiträge zu {0} erstellen solltest.
         > Wenn du selber eine role erstellen willst gehe zu <#{1}> und erstelle dort eine neue Reaction Role.
         > **Bitte gehe mit allen höflich um beachte unsere Regeln in <#1385340956403961886>!**
