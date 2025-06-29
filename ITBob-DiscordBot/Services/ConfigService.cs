@@ -24,8 +24,6 @@ public class ConfigService
                 {
                     ApplicationId = 00000000000,
                     Token = "",
-                    GuildId = "",
-                    BotAdmin = ""
                 },
                 BotPresence =
                 {

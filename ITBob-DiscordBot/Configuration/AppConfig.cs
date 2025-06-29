@@ -15,8 +15,6 @@ public class DiscordBot
 {
     public string Token { get; set; }
     public ulong ApplicationId { get; set; }
-    public string GuildId { get; set; }
-    public string BotAdmin { get; set; }
 }
 
 public class Presence
