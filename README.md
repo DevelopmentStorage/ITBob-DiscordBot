@@ -1,19 +1,25 @@
-# ITBob-DiscordBot
+# ITBob Discord Bot
 
-ITBob-DiscordBot is a small Discord bot written in C# using the [netCord.dev](netCord.dev) library and is used by a smaller Discord server.
-It uses [EF Core SQLite](https://learn.microsoft.com/de-de/ef/core/) for [ReactionRoles](https://github.com/DevelopmentStorage/ITBob-DiscordBot/tree/master/ITBob-DiscordBot/Features/ReactionRoles), [Verify](https://github.com/DevelopmentStorage/ITBob-DiscordBot/tree/master/ITBob-DiscordBot/Features/Verify), [TempVoice](https://github.com/DevelopmentStorage/ITBob-DiscordBot/tree/master/ITBob-DiscordBot/Features/TempVoice)
+**ITBob Discord Bot** is a small Discord bot written in **C#** using the [netCord.dev](https://netcord.dev) library, and is used on a smaller Discord server.
 
-Use the bot easily with Docker Compose 
-```services:
+It uses **[EF Core SQLite](https://learn.microsoft.com/de-de/ef/core/)** for various features such as:
+
+- [ReactionRoles](https://github.com/DevelopmentStorage/ITBob-DiscordBot/tree/master/ITBob-DiscordBot/Features/ReactionRoles)  
+- [Verify](https://github.com/DevelopmentStorage/ITBob-DiscordBot/tree/master/ITBob-DiscordBot/Features/Verify)
+- [TempVoice](https://github.com/DevelopmentStorage/ITBob-DiscordBot/tree/master/ITBob-DiscordBot/Features/TempVoice)
+
+You can easily start the bot with Docker Compose:
+
+```yaml
+services:
   itbob-discordbot:
-    image: “ghcr.io/developmentstorage/itbob-discordbot:latest”
+    image: ‘ghcr.io/developmentstorage/itbob-discordbot:latest’
     container_name: itbob-discordbot
     volumes:
       - itbob_data:/app
 
 volumes:
-  itbob_data:```
+  itbob_data:
+```
 
-Later, just adjust the config.json or work with a bind volume.
-
-Translated with DeepL.com (free version)
+You can then customise the `config.json` in the volume or alternatively use a bind volume.
