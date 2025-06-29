@@ -21,7 +21,8 @@ public class VerifyApproveAddFachkraft : ComponentInteractionModule<ButtonIntera
     }
 
     [ComponentInteraction("verify-approve-add-fachkraft")]
-    public async Task<InteractionMessageProperties> Button(ulong userId, string name, string className)
+    public async Task<InteractionMessageProperties> Button(ulong userId, string name, string className,
+        ulong interactionMessageId)
     {
         var guild = await Context.Client.Rest.GetGuildAsync((ulong)Context.Interaction.GuildId);
         if (guild is null)
@@ -64,11 +65,21 @@ public class VerifyApproveAddFachkraft : ComponentInteractionModule<ButtonIntera
             ),
             role, userId, Context.Interaction.User.Id);
 
+        var interactionMessage = await Context.Channel.GetMessageAsync(interactionMessageId);
+        if (interactionMessage != null)
+            return new InteractionMessageProperties
+            {
+                Content = "Done",
+                Components = [],
+                Flags = MessageFlags.Ephemeral
+            };
+        Logger.LogWarning("Interaction message not found for ID {InteractionMessageId}", interactionMessageId);
         return new InteractionMessageProperties
         {
-            Content = "Done",
-            Components = [],
+            Content = "Interaction message not found. Please try again later.",
             Flags = MessageFlags.Ephemeral
         };
+
+
     }
 }

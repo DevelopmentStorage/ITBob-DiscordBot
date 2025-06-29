@@ -35,6 +35,12 @@ public class ReactionRoleMessages
                 > **Message URL:** {3}
         """;
 
+    public string AdminReactionRoleLog { get; set; } = """
+                                                       Die Rolle wurde erfolgreich erstellt und genehmigt von <@{0}>. 
+                                                       Rollenname: {1}
+                                                       Thread URL: {2}
+                                                       """;
+
     public string ForumThreadCreated { get; set; } =
         """
         ## 💡 Willkommen bei r/topics für {0}!

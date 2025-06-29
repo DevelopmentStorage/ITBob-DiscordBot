@@ -21,7 +21,8 @@ public class VerifyApproveAddLayer8 : ComponentInteractionModule<ButtonInteracti
     }
 
     [ComponentInteraction("verify-approve-add-layer8")]
-    public async Task<InteractionMessageProperties?> Button(ulong userId, string name, string className)
+    public async Task<InteractionMessageProperties?> Button(ulong userId, string name, string className,
+        ulong interactionMessageId)
     {
         var guild = await Context.Client.Rest.GetGuildAsync((ulong)Context.Interaction.GuildId);
         if (guild is null)
@@ -64,6 +65,17 @@ public class VerifyApproveAddLayer8 : ComponentInteractionModule<ButtonInteracti
                 .AdminVerifyChannelId
             ),
             role, userId, Context.Interaction.User.Id);
+
+        var interactionMessage = await Context.Channel.GetMessageAsync(interactionMessageId);
+        if (interactionMessage != null)
+        {
+            await interactionMessage.DeleteAsync();
+        }
+        else
+        {
+            Logger.LogWarning("Interaction message with ID {MessageId} not found.", interactionMessageId);
+        }
+
 
         return new InteractionMessageProperties
         {

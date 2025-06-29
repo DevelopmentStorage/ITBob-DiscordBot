@@ -48,6 +48,27 @@ public class ReactionRoleApproveButton : ComponentInteractionModule<ButtonIntera
             };
         }
 
+        var reactionRole = await ReactionRoleService.GetReactionRoleByMessageIdAsync(messageId);
+        await Context.Interaction.Message.DeleteAsync();
+        await Context.Channel.SendMessageAsync(
+            new MessageProperties
+            {
+                Components =
+                [
+                    new ComponentContainerProperties
+                    {
+                        new TextDisplayProperties(
+                            config.Messages.ReactionRoleMessages.AdminReactionRoleLog.Replace("{0}",
+                                    Context.User.Id.ToString())
+                                .Replace("{1}", reactionRole?.GameName ?? "Unbekannt")
+                                .Replace("{2}",
+                                    $"https://discord.com/channels/{guildId}/{reactionRole?.ForumThreadId ?? 0}"))
+                    }
+                ],
+                Flags = MessageFlags.IsComponentsV2
+            }
+        );
+
         return new InteractionMessageProperties
         {
             Content = config.Messages.ReactionRoleMessages.ReactionRoleSuccessfullyCreated,

@@ -15,13 +15,16 @@ public class VerifyApprove : ComponentInteractionModule<ButtonInteractionContext
             [
                 new ActionRowProperties
                 {
-                    new ButtonProperties("verify-approve-add-fachkraft:" + userId + ":" + name + ":" + className,
+                    new ButtonProperties(
+                        "verify-approve-add-fachkraft:" + userId + ":" + name + ":" + className + ":" +
+                        Context.Interaction.Message.Id,
                         "Verifiziren als Fachkraft",
                         ButtonStyle.Success)
                     {
                         Emoji = new EmojiProperties("🟠")
                     },
-                    new ButtonProperties("verify-approve-add-layer8:" + userId + ":" + name + ":" + className,
+                    new ButtonProperties("verify-approve-add-layer8:" + userId + ":" + name + ":" + className + ":" +
+                                         Context.Interaction.Message.Id,
                         "Verifiziren als Layer8",
                         ButtonStyle.Success)
                     {
