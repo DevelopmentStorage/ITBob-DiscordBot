@@ -132,6 +132,12 @@ public class ReactionRoleReactionAdd : IMessageReactionAddGatewayHandler
                 });
             }
 
+            var reactionRoleGuildRole = await guild.GetRoleAsync(reactionRole.RoleId);
+            if (reactionRoleGuildRole != null)
+            {
+                await reactionRoleGuildRole.DeleteAsync();
+            }
+
             await reactionRoleService.DeleteReactionRoleByMessageIdAsync(arg.MessageId);
             await message.DeleteAsync();
 
