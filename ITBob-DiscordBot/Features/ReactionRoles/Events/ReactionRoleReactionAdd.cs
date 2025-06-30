@@ -122,10 +122,10 @@ public class ReactionRoleReactionAdd : IMessageReactionAddGatewayHandler
                     TextChannel;
             if (adminChannel != null)
             {
-                var adminMessage = await adminChannel.GetMessageAsync(reactionRole.AdminMessageId);
-                if (adminMessage != null) await adminMessage.DeleteAsync();
+                // var adminMessage = await adminChannel.GetMessageAsync(reactionRole.AdminMessageId);
+                // if (adminMessage != null) await adminMessage.DeleteAsync();
 
-                adminChannel.SendMessageAsync(new MessageProperties
+                await adminChannel.SendMessageAsync(new MessageProperties
                 {
                     Content =
                         config.Messages.ReactionRoleMessages.ReactionRoleDeleted.Replace("{0}", reactionRole.GameName),
