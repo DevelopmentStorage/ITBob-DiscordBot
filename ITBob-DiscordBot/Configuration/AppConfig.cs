@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using NetCord;
 using NetCord.Gateway;
 
@@ -89,4 +90,6 @@ public class ReactionRoles
 
     public int AutoDeleteUserInfoMessageAfterCreate { get; set; } = 10;
     public string ReactionEmoji { get; set; } = "👍";
+    public string AdminDeleteReactionEmoji { get; set; } = "🗑️";
+    public ulong AdminDeleteReactionRoleId { get; set; } = 1091020350889918496;
 }

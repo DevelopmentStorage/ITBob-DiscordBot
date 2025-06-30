@@ -31,48 +31,98 @@ public class ReactionRoleReactionAdd : IMessageReactionAddGatewayHandler
 
         var guild = await client.GetGuildAsync((ulong)arg.GuildId);
         var guildChannels = await guild.GetChannelsAsync();
-        var reactionRole = await reactionRoleService.GetReactionRoleByMessageIdAsync(arg.MessageId);
 
-        if (reactionRole == null)
+        if (arg.Emoji.Name == config.FeatureConfig.ReactionRoles.ReactionEmoji)
         {
-            Logger.LogWarning("Reaction role not found for message ID {MessageId}", arg.MessageId);
-            return;
-        }
+            var reactionRole = await reactionRoleService.GetReactionRoleByMessageIdAsync(arg.MessageId);
 
-        if (arg.ChannelId != config.FeatureConfig.ReactionRoles.RoleCreationChannelId) return;
-        var reactionChannel = guildChannels.FirstOrDefault(c => c.Id == arg.ChannelId) as TextChannel;
-        if (reactionChannel == null)
+
+            if (arg.ChannelId != config.FeatureConfig.ReactionRoles.RoleCreationChannelId) return;
+            var reactionChannel = guildChannels.FirstOrDefault(c => c.Id == arg.ChannelId) as TextChannel;
+            if (reactionChannel == null)
+            {
+                Logger.LogWarning("Reaction channel with ID {ChannelId} not found", arg.ChannelId);
+                return;
+            }
+
+            if (reactionRole == null)
+            {
+                Logger.LogWarning("Reaction role not found for message ID {MessageId}", arg.MessageId);
+                return;
+            }
+
+            var role = await guild.GetRoleAsync(reactionRole.RoleId);
+            var member = await guild.GetUserAsync(arg.UserId);
+
+            if (!reactionRole.IsApproved)
+            {
+                Logger.LogWarning("Reaction role with message ID {MessageId} is not approved", arg.MessageId);
+                return;
+            }
+
+            if (reactionRole.RoleId == 0)
+            {
+                Logger.LogWarning("Reaction role with message ID {MessageId} has no role assigned", arg.MessageId);
+                return;
+            }
+
+            await member.AddRoleAsync(reactionRole.RoleId);
+            Logger.LogInformation(
+                "Role {RoleName} added to user {UserId} in guild {GuildId} for reaction role {ReactionRoleId}",
+                role.Name, arg.UserId, arg.GuildId, reactionRole.Id);
+        }
+        else if (arg.Emoji.Name == config.FeatureConfig.ReactionRoles.AdminDeleteReactionEmoji)
         {
-            Logger.LogWarning("Reaction channel with ID {ChannelId} not found", arg.ChannelId);
-            return;
+            var reactionRole = await reactionRoleService.GetReactionRoleByMessageIdAsync(arg.MessageId);
+
+            if (reactionRole == null)
+            {
+                Logger.LogWarning("Reaction role not found for message ID {MessageId}", arg.MessageId);
+                return;
+            }
+
+            var channel = await client.GetChannelAsync(arg.ChannelId) as TextChannel;
+            if (channel == null)
+            {
+                Logger.LogWarning("Channel with ID {ChannelId} not found", arg.ChannelId);
+                return;
+            }
+
+            var member = await guild.GetUserAsync(arg.UserId);
+            if (!member.RoleIds.Contains(config.FeatureConfig.ReactionRoles.AdminDeleteReactionRoleId))
+            {
+                var error = await channel.SendMessageAsync(new MessageProperties
+                {
+                    Content = "You do not have the required role to delete reaction roles.",
+                });
+
+                await Task.Delay(2000);
+                await error.DeleteAsync();
+
+                Logger.LogWarning("User {UserId} does not have the required role to delete reaction roles",
+                    arg.UserId);
+                return;
+            }
+
+
+            var message = await channel.GetMessageAsync(arg.MessageId);
+
+            if (message == null)
+            {
+                Logger.LogWarning("Message with ID {MessageId} not found in channel {ChannelId}", arg.MessageId,
+                    arg.ChannelId);
+                return;
+            }
+
+            await reactionRoleService.DeleteReactionRoleByMessageIdAsync(arg.MessageId);
+            await message.DeleteAsync();
+
+            var info = await channel.SendMessageAsync(new MessageProperties
+            {
+                Content = "Reaction role message deleted successfully.",
+            });
+            await Task.Delay(2000);
+            await info.DeleteAsync();
         }
-
-        var role = await guild.GetRoleAsync(reactionRole.RoleId);
-        var member = await guild.GetUserAsync(arg.UserId);
-
-        if (!reactionRole.IsApproved)
-        {
-            Logger.LogWarning("Reaction role with message ID {MessageId} is not approved", arg.MessageId);
-            return;
-        }
-
-        if (reactionRole.RoleId == 0)
-        {
-            Logger.LogWarning("Reaction role with message ID {MessageId} has no role assigned", arg.MessageId);
-            return;
-        }
-
-
-        if (arg.Emoji.Name != config.FeatureConfig.ReactionRoles.ReactionEmoji)
-        {
-            Logger.LogWarning("Reaction emoji {Emoji} does not match configured emoji {ConfiguredEmoji}",
-                arg.Emoji.Name, config.FeatureConfig.ReactionRoles.ReactionEmoji);
-            return;
-        }
-
-        await member.AddRoleAsync(reactionRole.RoleId);
-        Logger.LogInformation(
-            "Role {RoleName} added to user {UserId} in guild {GuildId} for reaction role {ReactionRoleId}",
-            role.Name, arg.UserId, arg.GuildId, reactionRole.Id);
     }
 }
