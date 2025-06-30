@@ -104,7 +104,7 @@ public class ReactionRoleService
             new RoleProperties
             {
                 Name = reactionRole.GameName,
-                Color = new Color(32, 32, 23),
+                Color = new Color(46, 204, 113),
                 Mentionable = true,
                 Permissions = Permissions.SendMessages,
             });
