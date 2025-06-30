@@ -114,6 +114,24 @@ public class ReactionRoleReactionAdd : IMessageReactionAddGatewayHandler
                 return;
             }
 
+            var threadChannel = await client.GetChannelAsync(reactionRole.ForumThreadId);
+            if (threadChannel != null) await threadChannel.DeleteAsync();
+
+            var adminChannel =
+                await client.GetChannelAsync(config.FeatureConfig.ReactionRoles.AdminRoleApproveChannelId) as
+                    TextChannel;
+            if (adminChannel != null)
+            {
+                var adminMessage = await adminChannel.GetMessageAsync(reactionRole.AdminMessageId);
+                if (adminMessage != null) await adminMessage.DeleteAsync();
+
+                adminChannel.SendMessageAsync(new MessageProperties
+                {
+                    Content =
+                        config.Messages.ReactionRoleMessages.ReactionRoleDeleted.Replace("{0}", reactionRole.GameName),
+                });
+            }
+
             await reactionRoleService.DeleteReactionRoleByMessageIdAsync(arg.MessageId);
             await message.DeleteAsync();
 
@@ -123,6 +141,18 @@ public class ReactionRoleReactionAdd : IMessageReactionAddGatewayHandler
             });
             await Task.Delay(2000);
             await info.DeleteAsync();
+        }
+        else
+        {
+            var reactionMessage = await client.GetMessageAsync(arg.ChannelId, arg.MessageId);
+            if (reactionMessage == null)
+            {
+                Logger.LogWarning("Reaction message with ID {MessageId} not found in channel {ChannelId}",
+                    arg.MessageId, arg.ChannelId);
+                return;
+            }
+
+            await reactionMessage.DeleteAllReactionsAsync();
         }
     }
 }

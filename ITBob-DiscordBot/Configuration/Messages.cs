@@ -58,6 +58,9 @@ public class ReactionRoleMessages
     public string ReactionRoleSuccessfullyCreated { get; set; } =
         "Die Reaction Role wurde erfolgreich erstellt! Ein Admin wird diese nun überprüfen und genehmigen.";
 
+    public string ReactionRoleDeleted { get; set; } =
+        "Die Reaction Role wurde erfolgreich gelöscht ({0})";
+
     public ErrorData Errors { get; set; } = new();
 
     public class ErrorData
