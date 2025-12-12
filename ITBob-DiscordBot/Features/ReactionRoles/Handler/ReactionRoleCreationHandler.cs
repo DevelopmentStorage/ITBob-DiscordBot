@@ -66,14 +66,14 @@ public class ReactionRoleCreationHandler
                                     ButtonStyle.Success)
                                 {
                                     Disabled = false,
-                                    Emoji = new EmojiProperties("✅"),
+                                    Emoji = EmojiProperties.Standard(":white_check_mark:"),
                                     Id = 1
                                 },
                                 new ButtonProperties("reactionrole-deny:" + message.Id, "Deny Role Creation",
                                     ButtonStyle.Danger)
                                 {
                                     Disabled = false,
-                                    Emoji = new EmojiProperties("❌"),
+                                    Emoji = EmojiProperties.Standard(":x:"),
                                     Id = 2
                                 }
                             }
