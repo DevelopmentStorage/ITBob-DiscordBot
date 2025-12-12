@@ -17,7 +17,6 @@ services:
     container_name: itbob-discordbot
     volumes:
       - /docker/bobbot/config.json:/app/config.json
-- 
 ```
 
 You can then customise the `config.json` in the volume or alternatively use a bind volume.
