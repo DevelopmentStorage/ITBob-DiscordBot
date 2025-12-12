@@ -79,7 +79,6 @@ public static class Program
         }
 
         host.AddModules(typeof(Program).Assembly);
-        host.UseGatewayHandlers();
 
         await host.RunAsync();
     }

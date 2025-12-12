@@ -16,10 +16,8 @@ services:
     image: ‘ghcr.io/developmentstorage/itbob-discordbot:latest’
     container_name: itbob-discordbot
     volumes:
-      - itbob_data:/app
-
-volumes:
-  itbob_data:
+      - /docker/bobbot/config.json:/app/config.json
+- 
 ```
 
 You can then customise the `config.json` in the volume or alternatively use a bind volume.

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <RootNamespace>ITBob_DiscordBot</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -16,20 +16,19 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.6" />
-      <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
-      <PackageReference Include="NetCord" Version="1.0.0-alpha.390" />
-      <PackageReference Include="NetCord.Hosting" Version="1.0.0-alpha.390" />
-      <PackageReference Include="NetCord.Hosting.Services" Version="1.0.0-alpha.390" />
-      <PackageReference Include="NetCord.Services" Version="1.0.0-alpha.390" />
-      <PackageReference Include="Spectre.Console" Version="0.50.1-preview.0.18" />
-      <PackageReference Include="Spectre.Console.Cli" Version="0.50.1-preview.0.18" />
-      <PackageReference Include="YoutubeDLSharp" Version="1.1.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+      <PackageReference Include="NetCord" Version="1.0.0-alpha.450" />
+      <PackageReference Include="NetCord.Hosting" Version="1.0.0-alpha.450" />
+      <PackageReference Include="NetCord.Hosting.Services" Version="1.0.0-alpha.450" />
+      <PackageReference Include="NetCord.Services" Version="1.0.0-alpha.450" />
+      <PackageReference Include="Spectre.Console" Version="0.54.1-alpha.0.10" />
+      <PackageReference Include="Spectre.Console.Cli" Version="1.0.0-alpha.0.11" />
     </ItemGroup>
 
 </Project>

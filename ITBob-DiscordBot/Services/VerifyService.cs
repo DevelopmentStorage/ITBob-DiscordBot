@@ -74,7 +74,7 @@ public class VerifyService
                         new ActionRowProperties
                         {
                             new ButtonProperties("verify-approve:" + userId + ":" + name + ":" + className,
-                                new EmojiProperties(1377021742072987719), ButtonStyle.Secondary)
+                                EmojiProperties.Custom(1377021742072987719), ButtonStyle.Secondary)
                             {
                                 Id = 2,
                             }
